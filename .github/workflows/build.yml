@@ -1,8 +1,22 @@
-steps:
-- uses: actions/checkout@v2
-- uses: actions/setup-node@v2
-  with:
-    node-version: 'x.x.x'
-    check-latest: true
-- run: npm install
-- run: npm test
+name: Deploy spec
+
+on: [push]
+
+# TODO: commit message validation?
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 'x.x.x'
+        check-latest: true
+    - run: npm install
+    - run: npm test
+    - name: commit changes
+      uses: elstudio/actions-js-build/commit@v3
+      with:
+        commitMessage: "fixup: [spec] `npm run build`"
